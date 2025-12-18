@@ -7,7 +7,7 @@
 **금융권 실무 기준의 데이터 구조, 상태 관리, 감사·이력 개념**을 반영하는 것을 목표로 한다.
 
 ### 작업기간
-2025.12.17(1일, 11:00~16:00, 점심시간은 작업하지 않음)
+2025.12.xx(1일, 11:00~16:00, 점심시간은 작업하지 않음)
 
 ---
 <br>
@@ -15,6 +15,9 @@
 ### index.html (list) ## 이미지를 누르면 해당 페이지로 이동합니다.
 <a href="https://yingbbang.github.io/bnk-board-html/board/index.html"> 
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-index.png"></a>
+
+### gallery.html (gallery) ## 이미지를 누르면 해당 페이지로 이동합니다.
+<a href="https://yingbbang.github.io/bnk-board-html-gallery/board/gallery.html"> <img src="https://github.com/yingbbang/bnk-board-html-gallery/blob/main/board/assets/dummy/snapshot-gallery.png"></a>
 
 ### view.html (view)
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-view.png">
@@ -44,6 +47,7 @@
 - 금융권 게시판 시스템에서 요구되는 **데이터 책임 분리 구조**를 이해하고 구현
 - ERD → Data Dictionary → Code Definition으로 이어지는 **설계 문서 체계 확립**
 - 서버 없이도 구조적 사고를 검증할 수 있도록 **프론트 단독 구조로 구성**
+- (추가) 썸네일(대표 이미지) 기반 갤러리 UI를 통해 게시판 변형 화면을 실험
 
 ---
 
@@ -52,6 +56,7 @@
 ### 화면 (HTML)
 
 - 게시글 목록: `index.html`
+- 게시글 목록(갤러리/카드): `gallery.html`
 - 게시글 상세: `view.html`
 - 게시글 등록: `write.html`
 - 게시글 수정: `edit.html`
@@ -90,10 +95,35 @@
 
 - **성능 고려**
   - 조회수·댓글 수 등 트래픽 데이터 분리(BOARD_STAT)
+ 
+- **(추가) 미디어 표현 분리**
+  - 갤러리 카드용 대표 썸네일과 상세 본문 노출 이미지는 분리하여 관리
+  - 동일 파일이라도 “표현 목적(썸네일/본문/첨부)” 기준으로 구분
+ 
+---
+
+ ## 4. 디렉토리 구조
+ 
+서버가 없는 정적 환경이므로, 첨부/이미지 처리는 아래 정책으로 제한한다.
+
+ - `assets/uploads/`
+  - **정적 리소스(시드/관리자 제공 이미지)** 용도
+  - 브라우저 업로드 파일을 이 폴더에 “저장”할 수는 없음(정적 환경 한계)
+
+ - `LocalStorage 업로드(사용자 작성)`
+  - 사용자가 `write.html`에서 선택한 파일은 **DataURL(base64)** 로 저장 가능
+  - 단, localStorage 용량 제한이 있어 대용량/다중 이미지에는 부적합
+
+ - 첨부 구분 방식(권장)
+  - `attachments[]` 항목에 `role`로 목적을 구분
+    - `THUMB` : 갤러리 카드/대표 썸네일
+    - `INLINE` : 상세 본문 노출 이미지
+    - `FILE` : 다운로드 목적 첨부파일
+
 
 ---
 
-## 4. 디렉토리 구조
+## 5. 디렉토리 구조
 
 ```text
 bnk-board-html/
