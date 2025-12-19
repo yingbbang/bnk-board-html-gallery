@@ -1,0 +1,12 @@
+[
+  { "title": "익명 문의 1", "content": "이 기능 가능한가요?", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE", "is_anonymous": true },
+  { "title": "익명 문의 2", "content": "오류가 발생합니다.", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE", "is_anonymous": true },
+  { "title": "문의드립니다 3", "content": "사용 방법 질문입니다.", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE" },
+  { "title": "문의드립니다 4", "content": "정책 관련 질문입니다.", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE" },
+  { "title": "문의드립니다 5", "content": "계정 관련 질문입니다.", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE" },
+  { "title": "익명 문의 6", "content": "개선 요청합니다.", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE", "is_anonymous": true },
+  { "title": "문의드립니다 7", "content": "접속 이슈 문의", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE" },
+  { "title": "문의드립니다 8", "content": "결제 관련 질문", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE" },
+  { "title": "문의드립니다 9", "content": "권한 관련 질문", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE" },
+  { "title": "문의드립니다 10", "content": "기타 문의", "status": "ACTIVE", "board_type": "QNA", "category": "SERVICE" }
+]

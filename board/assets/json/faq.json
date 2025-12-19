@@ -1,0 +1,12 @@
+[
+  { "title": "로그인이 안 됩니다", "content": "비밀번호를 확인해주세요.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "회원가입 방법", "content": "회원가입 절차 안내입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "비밀번호 변경", "content": "비밀번호 변경 방법입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "탈퇴는 어떻게 하나요", "content": "회원 탈퇴 안내입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "이메일 변경", "content": "이메일 변경 방법입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "알림 설정", "content": "알림 설정 안내입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "모바일 사용 가능?", "content": "모바일 이용 안내입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "보안 정책", "content": "보안 관련 FAQ입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "계정 잠김", "content": "계정 잠김 해제 방법입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" },
+  { "title": "문의는 어디서?", "content": "문의 경로 안내입니다.", "status": "ACTIVE", "board_type": "FAQ", "category": "USER" }
+]

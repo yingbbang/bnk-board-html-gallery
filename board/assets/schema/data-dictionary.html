@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Dictionary – Board System</title>
+  <style>
+    body {
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      color: #222;
+    }
+    h1, h2, h3 {
+      margin-top: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 32px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f3f3f3;
+    }
+    .desc {
+      color: #555;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Data Dictionary</h1>
+
+<p class="desc">
+본 문서는 부산은행 게시판 시스템의 데이터 구조를 정의한 문서로,<br>
+테이블 간 관계, 컬럼 의미, 상태 관리 및 이력 관리 기준을 명확히 하기 위한 설계 기준서이다.
+</p>
+
+<hr>
+
+<h2>1. ROLE</h2>
+<p class="desc">사용자 권한 정의 테이블</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>role_code</td><td>string (PK)</td><td>역할 코드 (USER / ADMIN 등)</td></tr>
+  <tr><td>role_name</td><td>string</td><td>역할명</td></tr>
+  <tr><td>level</td><td>int</td><td>권한 레벨 (숫자가 높을수록 상위 권한)</td></tr>
+  <tr><td>description</td><td>string</td><td>역할 설명</td></tr>
+</table>
+
+<h2>2. USER</h2>
+<p class="desc">게시판 시스템 사용자 정보</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>user_id</td><td>int (PK)</td><td>사용자 식별자</td></tr>
+  <tr><td>user_name</td><td>string</td><td>사용자 이름</td></tr>
+  <tr><td>role_code</td><td>string (FK)</td><td>사용자 역할 코드</td></tr>
+</table>
+
+<h2>3. BOARD_TYPE_CODE</h2>
+<p class="desc">게시판 유형 코드 테이블</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>code</td><td>string (PK)</td><td>게시판 유형 코드 (NOTICE, FAQ, QNA 등)</td></tr>
+  <tr><td>name</td><td>string</td><td>게시판 유형명</td></tr>
+  <tr><td>description</td><td>string</td><td>게시판 유형 설명</td></tr>
+</table>
+
+<h2>4. CATEGORY_CODE</h2>
+<p class="desc">업무 도메인 분류 코드</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>code</td><td>string (PK)</td><td>카테고리 코드 (PENSION, PERSONAL, CORPORATE 등)</td></tr>
+  <tr><td>name</td><td>string</td><td>카테고리명</td></tr>
+</table>
+
+<h2>5. BOARD</h2>
+<p class="desc">
+게시판의 핵심 테이블로, 모든 게시글의 원본 데이터를 관리한다.<br>
+물리 삭제는 수행하지 않으며 상태(status) 기반으로 관리한다.
+</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>id</td><td>int (PK)</td><td>게시글 식별자</td></tr>
+  <tr><td>title</td><td>string</td><td>게시글 제목</td></tr>
+  <tr><td>content</td><td>text</td><td>게시글 본문</td></tr>
+  <tr><td>board_type_code</td><td>string (FK)</td><td>게시판 유형 코드</td></tr>
+  <tr><td>category_code</td><td>string (FK)</td><td>업무 카테고리 코드</td></tr>
+  <tr><td>status</td><td>string</td><td>게시글 상태 (ACTIVE / HIDDEN / DELETED / LOCKED)</td></tr>
+  <tr><td>is_public</td><td>boolean</td><td>공개 여부</td></tr>
+  <tr><td>writer_id</td><td>int (FK)</td><td>실제 작성자</td></tr>
+  <tr><td>created_by</td><td>int (FK)</td><td>등록자</td></tr>
+  <tr><td>updated_by</td><td>int (FK)</td><td>최종 수정자</td></tr>
+  <tr><td>created_at</td><td>datetime</td><td>등록 일시</td></tr>
+  <tr><td>updated_at</td><td>datetime</td><td>최종 수정 일시</td></tr>
+  <tr><td>version</td><td>int</td><td>동시 수정 방지를 위한 버전 값</td></tr>
+</table>
+
+<h2>6. BOARD_STAT</h2>
+<p class="desc">게시글 트래픽 및 통계 정보</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>board_id</td><td>int (PK, FK)</td><td>게시글 식별자</td></tr>
+  <tr><td>view_count</td><td>int</td><td>조회수</td></tr>
+  <tr><td>like_count</td><td>int</td><td>좋아요 수</td></tr>
+  <tr><td>comment_count</td><td>int</td><td>댓글 수</td></tr>
+</table>
+
+<h2>7. COMMENT</h2>
+<p class="desc">게시글 댓글 및 대댓글 관리</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>comment_id</td><td>int (PK)</td><td>댓글 식별자</td></tr>
+  <tr><td>board_id</td><td>int (FK)</td><td>게시글 식별자</td></tr>
+  <tr><td>parent_comment_id</td><td>int</td><td>부모 댓글 ID (대댓글)</td></tr>
+  <tr><td>content</td><td>text</td><td>댓글 내용</td></tr>
+  <tr><td>status</td><td>string</td><td>댓글 상태</td></tr>
+  <tr><td>created_by</td><td>int (FK)</td><td>작성자</td></tr>
+  <tr><td>created_at</td><td>datetime</td><td>작성 일시</td></tr>
+</table>
+
+<h2>8. ATTACH_FILE</h2>
+<p class="desc">게시글 첨부파일 메타 정보</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>file_id</td><td>int (PK)</td><td>파일 식별자</td></tr>
+  <tr><td>board_id</td><td>int (FK)</td><td>게시글 식별자</td></tr>
+  <tr><td>file_name</td><td>string</td><td>파일명</td></tr>
+  <tr><td>file_path</td><td>string</td><td>파일 저장 경로</td></tr>
+  <tr><td>file_size</td><td>int</td><td>파일 크기</td></tr>
+  <tr><td>mime_type</td><td>string</td><td>MIME 타입</td></tr>
+  <tr><td>created_at</td><td>datetime</td><td>업로드 일시</td></tr>
+</table>
+
+<h2>9. BOARD_HISTORY</h2>
+<p class="desc">게시글 수정 이력 관리</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>history_id</td><td>int (PK)</td><td>이력 식별자</td></tr>
+  <tr><td>board_id</td><td>int (FK)</td><td>게시글 식별자</td></tr>
+  <tr><td>before_content</td><td>text</td><td>수정 전 내용</td></tr>
+  <tr><td>after_content</td><td>text</td><td>수정 후 내용</td></tr>
+  <tr><td>updated_by</td><td>int (FK)</td><td>수정자</td></tr>
+  <tr><td>updated_at</td><td>datetime</td><td>수정 일시</td></tr>
+</table>
+
+<h2>10. BOARD_SCHEDULE</h2>
+<p class="desc">게시글 예약 공개 관리</p>
+
+<table>
+  <tr><th>컬럼명</th><th>타입</th><th>설명</th></tr>
+  <tr><td>board_id</td><td>int (PK, FK)</td><td>게시글 식별자</td></tr>
+  <tr><td>open_at</td><td>datetime</td><td>게시 시작 일시</td></tr>
+  <tr><td>close_at</td><td>datetime</td><td>게시 종료 일시</td></tr>
+</table>
+
+</body>
+</html>

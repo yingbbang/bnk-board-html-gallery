@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Code Definition – Board System</title>
+  <style>
+    body {
+      font-family: Arial, "Noto Sans KR", sans-serif;
+      margin: 40px;
+      line-height: 1.6;
+      color: #222;
+    }
+    h1, h2, h3 {
+      margin-top: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 32px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f3f3f3;
+    }
+    .desc {
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Code Definition</h1>
+
+<p class="desc">
+본 문서는 게시판 시스템 내에서 사용되는 코드값의 의미와 사용 규칙을 정의한다.<br>
+코드값은 권한 판단, 상태 분기, 데이터 정합성 유지의 기준이 되며,<br>
+임의 변경 시 시스템 전반에 영향을 줄 수 있으므로 본 문서에 정의된 기준을 따른다.
+</p>
+
+<hr>
+
+<h2>1. ROLE CODE</h2>
+
+<p class="desc">
+사용자의 권한 등급을 정의하는 코드로, 역할(role_code)과 숫자 레벨(level)을 함께 사용한다.<br>
+숫자 레벨 기반 권한 분기는 금융권 실무에서 사용하는 표준 방식이다.
+</p>
+
+<table>
+  <tr>
+    <th>코드값</th>
+    <th>level</th>
+    <th>의미</th>
+    <th>설명</th>
+  </tr>
+  <tr>
+    <td>USER</td>
+    <td>1</td>
+    <td>일반 사용자</td>
+    <td>게시글 조회 및 작성 가능</td>
+  </tr>
+  <tr>
+    <td>MANAGER</td>
+    <td>5</td>
+    <td>중간 관리자</td>
+    <td>게시글 관리 및 제한적 상태 변경 가능</td>
+  </tr>
+  <tr>
+    <td>ADMIN</td>
+    <td>9</td>
+    <td>최고 관리자</td>
+    <td>모든 게시판 및 상태 관리 권한 보유</td>
+  </tr>
+</table>
+
+<h3>사용 규칙</h3>
+<ul class="desc">
+  <li>권한 판단은 <strong>role_code + level</strong>을 함께 사용한다.</li>
+  <li>level 값은 숫자가 높을수록 상위 권한을 의미한다.</li>
+  <li>role_code 단독으로 로직 분기하지 않는다.</li>
+</ul>
+
+---
+
+<h2>2. BOARD TYPE CODE</h2>
+
+<p class="desc">
+게시판의 기능적 성격을 정의하는 코드로, 게시글의 성격 및 화면 구성의 기준이 된다.
+</p>
+
+<table>
+  <tr>
+    <th>코드값</th>
+    <th>의미</th>
+    <th>설명</th>
+  </tr>
+  <tr>
+    <td>NOTICE</td>
+    <td>공지사항</td>
+    <td>관리자 공지용 게시판</td>
+  </tr>
+  <tr>
+    <td>FAQ</td>
+    <td>자주 묻는 질문</td>
+    <td>읽기 위주의 게시판</td>
+  </tr>
+  <tr>
+    <td>QNA</td>
+    <td>문의/답변</td>
+    <td>사용자 문의 게시판</td>
+  </tr>
+  <tr>
+    <td>TERMS</td>
+    <td>약관</td>
+    <td>시스템 고정 게시물</td>
+  </tr>
+</table>
+
+<h3>주의사항</h3>
+<ul class="desc">
+  <li>게시판 추가 시 테이블 구조 변경 없이 코드 확장으로 대응한다.</li>
+  <li>화면 메뉴 구조와 1:1로 매핑하지 않는다.</li>
+</ul>
+
+---
+
+<h2>3. CATEGORY CODE</h2>
+
+<p class="desc">
+게시글을 업무 도메인 기준으로 분류하기 위한 코드이다.
+</p>
+
+<table>
+  <tr>
+    <th>코드값</th>
+    <th>의미</th>
+    <th>설명</th>
+  </tr>
+  <tr>
+    <td>PENSION</td>
+    <td>퇴직연금</td>
+    <td>퇴직연금 관련 게시물</td>
+  </tr>
+  <tr>
+    <td>PERSONAL</td>
+    <td>개인</td>
+    <td>개인 금융</td>
+  </tr>
+  <tr>
+    <td>CORPORATE</td>
+    <td>기업</td>
+    <td>기업 금융</td>
+  </tr>
+</table>
+
+<h3>사용 원칙</h3>
+<ul class="desc">
+  <li>게시판 유형(board_type_code)과 혼용하지 않는다.</li>
+  <li>검색, 필터, 권한 확장을 위한 기준값으로 사용한다.</li>
+</ul>
+
+---
+
+<h2>4. BOARD STATUS CODE</h2>
+
+<p class="desc">
+게시글의 생명주기를 관리하기 위한 상태 코드이다.<br>
+물리 삭제는 수행하지 않으며 상태 변경으로 관리한다.
+</p>
+
+<table>
+  <tr>
+    <th>상태값</th>
+    <th>의미</th>
+    <th>설명</th>
+  </tr>
+  <tr>
+    <td>ACTIVE</td>
+    <td>정상</td>
+    <td>기본 노출 상태</td>
+  </tr>
+  <tr>
+    <td>HIDDEN</td>
+    <td>숨김</td>
+    <td>관리자만 조회 가능</td>
+  </tr>
+  <tr>
+    <td>DELETED</td>
+    <td>삭제</td>
+    <td>논리 삭제 상태</td>
+  </tr>
+  <tr>
+    <td>LOCKED</td>
+    <td>잠금</td>
+    <td>수정 및 열람 제한</td>
+  </tr>
+</table>
+
+<h3>운영 기준</h3>
+<ul class="desc">
+  <li>모든 조회 쿼리는 기본적으로 ACTIVE 상태만 대상으로 한다.</li>
+  <li>DELETED 상태는 감사 및 복구 가능성을 고려해 유지한다.</li>
+</ul>
+
+---
+
+<h2>5. COMMENT STATUS CODE</h2>
+
+<p class="desc">
+댓글의 노출 여부를 관리하기 위한 상태 코드이다.
+</p>
+
+<table>
+  <tr>
+    <th>상태값</th>
+    <th>의미</th>
+    <th>설명</th>
+  </tr>
+  <tr>
+    <td>ACTIVE</td>
+    <td>정상</td>
+    <td>댓글 노출</td>
+  </tr>
+  <tr>
+    <td>DELETED</td>
+    <td>삭제</td>
+    <td>내용 비노출</td>
+  </tr>
+</table>
+
+<h3>주의사항</h3>
+<ul class="desc">
+  <li>댓글 또한 물리 삭제를 수행하지 않는다.</li>
+  <li>댓글 수 집계 시 상태 조건을 반드시 고려한다.</li>
+</ul>
+
+---
+
+<h2>6. USER → BOARD 행위 구분 기준</h2>
+
+<p class="desc">
+사용자와 게시글 간의 행위는 목적에 따라 명확히 구분하여 기록한다.
+</p>
+
+<table>
+  <tr>
+    <th>행위</th>
+    <th>컬럼</th>
+    <th>의미</th>
+  </tr>
+  <tr>
+    <td>writes</td>
+    <td>writer_id</td>
+    <td>게시글을 실제로 작성한 사용자</td>
+  </tr>
+  <tr>
+    <td>creates</td>
+    <td>created_by</td>
+    <td>게시글을 시스템에 등록한 사용자 (대리 등록 가능)</td>
+  </tr>
+  <tr>
+    <td>updates</td>
+    <td>updated_by</td>
+    <td>게시글을 최종 수정한 사용자</td>
+  </tr>
+</table>
+
+<p class="desc">
+본 구분은 감사 추적 및 책임 소재 명확화를 위한 설계로,<br>
+금융권 시스템에서 요구되는 행위 분리 원칙을 따른다.
+</p>
+
+</body>
+</html>

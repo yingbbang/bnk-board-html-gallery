@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>BNK Board - List</title>
+
+  <link rel="stylesheet" href="./assets/css/common.css">
+  <link rel="stylesheet" href="./assets/css/board.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- =========================
+       1. 글로벌 영역 (로고 + 검색)
+       ========================= -->
+    <div class="board-global">
+
+      <div class="board-logo-row">
+        <a href="index.html" class="logo-link">
+          <img src="./assets/logo/topBrLogo2.png" alt="BNK 부산은행" class="board-logo">
+        </a>
+      </div>
+
+      <div class="board-search">
+        <input type="text" id="keyword" placeholder="검색어를 입력하세요">
+        <button id="searchBtn">검색</button>
+      </div>
+
+    </div>
+
+    <!-- =========================
+       2. 카테고리 영역
+       ========================= -->
+    <div class="board-category" id="categoryBar">
+      <button class="active" data-category="">전체</button>
+
+      <button data-category="IT">IT·시스템</button>
+      <button data-category="SECURITY">보안</button>
+      <button data-category="DIGITAL">디지털금융</button>
+      <button data-category="FINANCE_PRODUCT">금융상품</button>
+      <button data-category="PENSION">퇴직연금</button>
+      <button data-category="CORPORATE">기업금융</button>
+      <button data-category="RETAIL">개인금융</button>
+      <button data-category="DIGITAL_ASSET">디지털자산</button>
+      <button data-category="CSR">사회공헌(CSR)</button>
+      <button data-category="EVENT">이벤트·프로모션</button>
+    </div>
+
+
+    <!-- =========================
+       3. 상단 정보 배너
+       ========================= -->
+    <div class="board-banner board-banner--top">
+      <a href="#">
+        <img src="./assets/banner/banner-info.png" alt="BNK 안내 배너">
+      </a>
+    </div>
+
+    <!-- =========================
+       4. 게시판 헤더
+       ========================= -->
+    <div class="board-header">
+      <div class="board-action-row">
+        <h1 class="board-title-text">게시판 목록</h1>
+        <button class="primary" onclick="location.href='write.html'">글쓰기</button>
+      </div>
+    </div>
+
+    <!-- =========================
+       5. 게시판 목록
+       ========================= -->
+    <table class="board-table">
+      <thead>
+        <tr>
+          <th class="text-center">번호</th>
+          <th class="text-center">카테고리</th>
+          <th class="text-center">제목</th>
+          <th class="text-center">글쓴이</th>
+          <th class="text-center">작성일</th>
+          <th class="text-center">조회</th>
+          <th class="text-center">추천</th>
+        </tr>
+      </thead>
+      <tbody id="boardList"></tbody>
+    </table>
+
+    <!-- =========================
+       6. 페이지네이션
+       ========================= -->
+    <div class="board-pagination" id="pagination"></div>
+
+    <!-- =========================
+       7. 하단 이벤트 배너
+       ========================= -->
+    <div class="board-banner board-banner--bottom">
+      <a href="#">
+        <img src="./assets/banner/banner-event.png" alt="BNK 이벤트 배너">
+      </a>
+    </div>
+
+  </div>
+
+  <!-- =========================
+       공통 스크립트
+       ========================= -->
+  <script src="./assets/js/storage.js"></script>
+  <script src="./assets/js/seed.js"></script>
+  <script src="./assets/js/util.js"></script>
+
+  <!-- =========================
+       화면 전용 스크립트
+       ========================= -->
+  <script src="./assets/js/board_list.js"></script>
+
+  <!-- =========================
+       Footer
+       ========================= -->
+  <footer class="board-footer">
+    <a href="https://github.com/yingbbang" target="_blank" class="footer-github">
+      <img src="./assets/icons/icon-github.svg" alt="GitHub">
+      <span>© 2025 yingbbang</span>
+    </a>
+  </footer>
+
+</body>
+
+</html>
+

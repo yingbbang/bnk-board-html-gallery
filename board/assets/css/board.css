@@ -1,0 +1,575 @@
+/* 상단 고정 공지 행 */
+.board-table tr.pinned {
+  background-color: #fff4f4;
+}
+
+/* 공지 아이콘 */
+.notice-icon {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #c00;
+  border: 1px solid #c00;
+  border-radius: 4px;
+}
+
+
+/* =================================================
+   Board Header (공통)
+   - 로고(1행) + 타이틀/액션(2행) 구조
+   ================================================= */
+
+.board-header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.board-logo-row {
+  display: flex;
+  align-items: center;
+}
+
+.board-logo {
+  height: 28px;
+}
+
+.board-action-row {
+  display: flex;
+  align-items: center;
+}
+
+/* 핵심 */
+.board-action-row .primary {
+  margin-left: auto;
+}
+
+
+/* =================================================
+   Board List Table
+   ================================================= */
+
+.board-table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.board-table th,
+.board-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.board-table th {
+  background: #f1f3f5;
+  font-weight: 600;
+}
+
+.board-table tr:hover {
+  background: #fafafa;
+}
+
+.board-table .title a {
+  font-weight: 500;
+}
+
+.board-table td:nth-child(3) {
+  text-align: center;
+}
+
+/* =================================================
+   Board View (Detail)
+   ================================================= */
+
+.board-view {
+  padding: 20px;
+  background: #fff;
+}
+
+.board-view-header {
+  padding: 24px 0;
+  /* header에서 이미 구분선을 사용하므로
+     상세 헤더에는 border를 두지 않음 */
+}
+
+.board-view-header .title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.board-view-header .meta {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.board-view-content {
+  padding: 32px 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #111827;
+  min-height: 200px;
+}
+
+.board-view {
+  padding: 20px;
+  background: #fff;
+}
+
+.board-view-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+
+/* =================================================
+   Board Form (Write / Edit)
+   ================================================= */
+
+.board-form {
+  background: #fff;
+  padding: 24px;
+  border: 1px solid #ddd;
+}
+
+.board-form .form-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+/* =========================
+ * Write Form - Inline Fields
+ * ========================= */
+
+.board-form .form-inline {
+  display: flex;
+  gap: 16px;
+}
+
+.board-form .form-inline-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-form .form-inline-item label {
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.board-form .form-inline-item input {
+  height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* 비밀번호 입력 강조 (금융 UX) */
+.board-form input[type="password"] {
+  letter-spacing: 0.08em;
+}
+
+/* 안내 문구 */
+.form-help {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #666;
+}
+
+.form-notice {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+}
+
+
+/* =================================================
+   Status Badge
+   ================================================= */
+
+.status {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+.status.ACTIVE {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.status.HIDDEN {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.status.DELETED {
+  background: #fbe9e7;
+  color: #c62828;
+}
+
+.status.LOCKED {
+  background: #eceff1;
+  color: #37474f;
+}
+
+/* =================================================
+   Attachment (View)
+   ================================================= */
+
+.board-attach {
+  margin-top: 32px;
+}
+
+.board-attach h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.attach-item {
+  margin-bottom: 8px;
+}
+
+.attach-thumb {
+  max-width: 200px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 6px;
+  display: block;
+}
+
+
+
+/* =================================================
+   Form Elements (Write / Edit)
+   ================================================= */
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-help {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* =================================================
+   Global Area (Logo + Search)
+   ================================================= */
+
+.board-global {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.board-search {
+  display: flex;
+  gap: 6px;
+}
+
+.board-search input {
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+/* =================================================
+   Category Tabs
+   ================================================= */
+
+.board-category {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.board-category button {
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #374151;
+}
+
+.board-category button.active {
+  font-weight: 600;
+  border-bottom: 2px solid #2563eb;
+}
+
+/* =================================================
+   Board Banner (Top / Bottom)
+   ================================================= */
+
+.board-banner {
+  text-align: center;
+}
+
+.board-banner img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 상단 배너: 정보성 */
+.board-banner--top {
+  margin: 16px 0;
+  padding: 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+}
+
+/* 하단 배너: 이벤트/홍보 */
+.board-banner--bottom {
+  margin-top: 32px;
+  padding: 16px;
+  background: #eef2ff;
+  border: 1px dashed #c7d2fe;
+}
+
+/* =================================================
+   Pagination
+   ================================================= */
+
+.board-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 24px;
+}
+
+.board-pagination button {
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  cursor: pointer;
+}
+
+.board-pagination button.active {
+  font-weight: 600;
+  background: #e5e7eb;
+}
+
+.board-action-row {
+  display: flex;
+  align-items: center;
+}
+
+
+/* 번호, 카테고리, 글쓴이, 날짜, 조회, 추천 중앙정렬 */
+.board-table th:nth-child(1),
+.board-table td:nth-child(1),
+.board-table th:nth-child(4),
+.board-table td:nth-child(4),
+.board-table th:nth-child(5),
+.board-table td:nth-child(5),
+.board-table th:nth-child(6),
+.board-table td:nth-child(6),
+.board-table th:nth-child(7),
+.board-table td:nth-child(7) {
+  text-align: center;
+}
+
+/* 제목 컬럼만 왼쪽 정렬 */
+.board-table th:nth-child(3),
+.board-table td:nth-child(3) {
+  text-align: left;
+}
+
+
+/* 첨부파일 아이콘 (목록용) */
+.attach-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+  background: url("../icons/icon-image.svg") no-repeat center;
+  background-size: contain;
+  flex-shrink: 0;
+}
+
+.attach-icon.image {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url("../icons/icon-image.svg") no-repeat center;
+  background-size: contain;
+}
+
+
+/* =================================================
+   Footer
+   ================================================= */
+
+.board-footer {
+  margin-top: 40px;
+  padding: 16px 0;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.footer-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #374151;
+}
+
+.footer-github img {
+  width: 18px;
+  height: 18px;
+}
+
+.footer-github:hover {
+  text-decoration: underline;
+}
+
+.board-view-header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.board-view-header .title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.meta-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #555;
+}
+
+.meta-left,
+.meta-right {
+  display: flex;
+  gap: 6px;
+}
+
+.divider {
+  color: #bbb;
+}
+
+
+.board-like {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.board-like button {
+  padding: 6px 14px;
+}
+
+.board-like .like-count {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #444;
+}
+
+
+/* =================================================
+   Write / Gallery Image Fields (추가)
+   ================================================= */
+
+/* select, password, url도 동일한 폼 룩 적용 */
+.form-group select,
+.form-group input[type="password"],
+.form-group input[type="url"] {
+  width: 100%;
+  height: 40px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background: #fff;
+}
+
+/* readonly 입력(작성자 등) 톤 다운 */
+.form-group input[readonly] {
+  background: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* 체크박스 옵션(리스트/갤러리 노출) 한 줄 정렬 */
+.expose-options {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.expose-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.expose-options input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb; /* primary 톤 */
+}
+
+/* 썸네일/본문 이미지 입력 섹션 가독성 */
+#thumbUrl,
+#viewImageUrls {
+  margin-bottom: 8px;
+}
+
+/* 기존 첨부파일 삭제 체크 라인(EDIT용) */
+.attach-row .muted {
+  color: #6b7280;
+  font-size: 12px;
+  margin-left: 6px;
+}
+
+/* 모바일에서 작성자/비번 2열 깨짐 방지 */
+@media (max-width: 640px) {
+  .board-form .form-inline {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>BNK Board - View</title>
+
+  <link rel="stylesheet" href="./assets/css/common.css">
+  <link rel="stylesheet" href="./assets/css/board.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- =========================
+     1. 글로벌 영역
+     ========================= -->
+    <div class="board-global">
+      <div class="board-logo-row">
+        <a href="index.html" class="logo-link">
+          <img src="./assets/logo/topBrLogo2.png" class="board-logo">
+        </a>
+      </div>
+      <div class="board-search">
+        <input type="text" placeholder="검색어를 입력하세요" disabled>
+        <button disabled>검색</button>
+      </div>
+    </div>
+
+    <!-- =========================
+     2. 카테고리
+     ========================= -->
+    <div class="board-category">
+      <button class="active" id="viewCategory"></button>
+    </div>
+
+
+    <!-- =========================
+     3. 게시판 헤더
+     ========================= -->
+    <div class="board-header">
+      <div class="board-action-row">
+        <h1 class="board-title-text" id="boardTitle"></h1>
+
+      </div>
+    </div>
+
+    <!-- =========================
+     4. 게시글 영역
+     ========================= -->
+    <div class="board-view">
+
+      <!-- 게시글 헤더 (상단 UX) -->
+      <div class="board-view-header">
+
+        <!-- 제목 -->
+        <h2 class="title"></h2>
+
+        <!-- 메타 라인 -->
+        <div class="meta-line">
+          <!-- 좌측: 작성 정보 -->
+          <div class="meta-left">
+            <span class="writer"></span>
+            <span class="divider">|</span>
+            <span class="ip"></span>
+            <span class="divider">|</span>
+            <span class="date"></span>
+          </div>
+
+          <!-- 우측: 통계 정보 -->
+          <div class="meta-right">
+            <span class="view-count"></span>
+            <span class="divider">|</span>
+            <span class="like-count"></span>
+            <span class="divider">|</span>
+            <span class="comment-count"></span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- 본문 -->
+      <div class="board-view-content" id="content"></div>
+
+<!-- 추천 영역 -->
+<div class="board-like">
+  <button id="btnLike">추천</button>
+  <span class="like-count-body">추천 0</span>
+</div>
+
+
+
+      <!-- 첨부파일 -->
+      <div class="board-attach">
+        <h3>첨부파일</h3>
+        <div id="attachList"></div>
+      </div>
+
+    </div>
+
+    <!-- =========================
+     5. 댓글 영역
+     ========================= -->
+    <div class="board-comments">
+
+      <div class="comment-header">
+        <span class="comment-count">댓글 0</span>
+      </div>
+
+      <ul class="comment-list" id="commentList"></ul>
+
+      <div class="comment-write">
+        <textarea id="commentContent" placeholder="댓글을 입력하세요"></textarea>
+        <div class="comment-actions">
+          <button id="btnCommentSubmit">등록</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================
+     6. 하단 액션
+     ========================= -->
+    <div class="board-view-actions">
+      <button id="btnEdit">수정</button>
+      <button id="btnDelete">삭제</button>
+      <button onclick="location.href='index.html'">목록</button>
+    </div>
+
+    <!-- =========================
+     7. 하단 배너
+     ========================= -->
+    <div class="board-banner board-banner--bottom">
+      <img src="./assets/banner/banner-event.png">
+    </div>
+
+  </div>
+
+  <!-- =========================
+     Script
+     ========================= -->
+  <script src="./assets/js/storage.js"></script>
+  <script src="./assets/js/seed.js"></script>
+  <script src="./assets/js/util.js"></script>
+  <script src="./assets/js/board_view.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>BNK Board - Write</title>
+
+  <link rel="stylesheet" href="./assets/css/common.css">
+  <link rel="stylesheet" href="./assets/css/board.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- 게시판 헤더 -->
+    <div class="board-header">
+
+      <!-- 로고 -->
+      <div class="board-logo-row">
+        <a href="index.html" class="logo-link">
+          <img src="./assets/logo/topBrLogo2.png" alt="BNK 부산은행" class="board-logo">
+        </a>
+      </div>
+
+      <!-- 제목 -->
+      <div class="board-action-row">
+        <h1>게시글 작성</h1>
+      </div>
+
+    </div>
+
+    <!-- 상단 배너 -->
+    <div class="board-banner board-banner--top">
+      게시판 성격에 맞는 내용을 작성해 주세요.<br>
+      광고·비방·부적절한 내용은 관리자에 의해 삭제될 수 있습니다.
+    </div>
+
+    <!-- 작성 폼 -->
+    <form id="writeForm" class="board-form">
+
+      <!-- 작성 모드(리스트/갤러리) : JS가 qs(mode) 읽어서 기본값 세팅 -->
+      <input type="hidden" id="mode" value="list">
+
+      <!-- 노출 위치 -->
+      <div class="form-group">
+        <label>노출 위치</label>
+        <div class="form-help expose-options">
+          <label>
+            <input type="checkbox" id="exposeList" checked>
+            리스트(index) 노출
+          </label>
+          <label>
+            <input type="checkbox" id="exposeGallery">
+            갤러리(gallery) 노출
+          </label>
+        </div>
+
+        <small class="form-help">
+          ※ 갤러리 노출을 체크하면 “갤러리 썸네일”이 필요합니다.
+        </small>
+      </div>
+
+      <!-- 카테고리 -->
+      <div class="form-group">
+        <label for="category">카테고리</label>
+        <select id="category" required>
+          <option value="">선택</option>
+          <option value="IT">IT·시스템</option>
+          <option value="SECURITY">보안</option>
+          <option value="DIGITAL">디지털금융</option>
+          <option value="FINANCE_PRODUCT">금융상품</option>
+          <option value="PENSION">퇴직연금</option>
+          <option value="CORPORATE">기업금융</option>
+          <option value="RETAIL">개인금융</option>
+          <option value="DIGITAL_ASSET">디지털자산</option>
+          <option value="CSR">사회공헌(CSR)</option>
+          <option value="EVENT">이벤트·프로모션</option>
+        </select>
+      </div>
+
+      <!-- 작성자 + 비밀번호 (같은 줄) -->
+      <div class="form-group form-inline">
+        <div class="form-inline-item">
+          <label for="writer">작성자</label>
+          <input type="text" id="writer" placeholder="익명" maxlength="20">
+        </div>
+
+        <div class="form-inline-item">
+          <label for="password">비밀번호</label>
+          <input type="password" id="password" maxlength="20" placeholder="수정/삭제용" required>
+        </div>
+      </div>
+
+      <!-- 제목 -->
+      <div class="form-group">
+        <label for="title">제목</label>
+        <input type="text" id="title" placeholder="제목을 입력해 주세요." required>
+      </div>
+
+      <!-- 내용 -->
+      <div class="form-group">
+        <label for="content">내용</label>
+        <textarea id="content" rows="8" placeholder="내용을 입력해 주세요." required></textarea>
+      </div>
+
+      <!-- =========================
+         갤러리 썸네일(카드) 전용
+         ========================= -->
+      <div class="form-group">
+        <label>갤러리 썸네일 (카드용)</label>
+
+        <input type="url" id="thumbUrl" placeholder="썸네일 이미지 URL (권장)">
+        <small class="form-help">
+          ※ 갤러리 카드에만 사용됩니다. view 본문 이미지와 별개로 관리됩니다.
+        </small>
+
+        <div style="height:10px;"></div>
+
+        <input type="file" id="thumbFile" accept="image/*">
+        <small class="form-help">
+          ※ 파일 업로드를 쓰려면 board_write.js에서 FileReader로 저장(데이터URL) 처리해야 합니다.
+        </small>
+      </div>
+
+      <!-- =========================
+         view 본문 이미지 전용
+         ========================= -->
+      <div class="form-group">
+        <label>상세(view) 본문 이미지</label>
+
+        <textarea id="viewImageUrls" rows="4" placeholder="이미지 URL을 한 줄에 하나씩 입력 (예: https://...jpg)"></textarea>
+        <small class="form-help">
+          ※ view.html 본문에만 노출됩니다. 갤러리 썸네일과 다르게 관리됩니다.
+        </small>
+
+        <div style="height:10px;"></div>
+
+        <input type="file" id="viewImages" multiple accept="image/*">
+        <small class="form-help">
+          ※ 파일 업로드를 쓰려면 board_write.js에서 파일을 저장 가능한 형태로 변환/저장해야 합니다.
+        </small>
+      </div>
+
+      <!-- 일반 첨부파일 (최대 5개) -->
+      <div class="form-group">
+        <label for="attachments">일반 첨부파일</label>
+        <input type="file" id="attachments" multiple accept="*/*">
+        <small class="form-help">
+          ※ 첨부(썸네일 + 본문 이미지 + 일반 첨부) 합산 “최대 5개”로 제한하려면 JS에서 검증해야 합니다.
+        </small>
+      </div>
+
+      <!-- 안내 문구 -->
+      <div class="form-notice">
+        ※ 쉬운 비밀번호를 입력하면 타인의 수정·삭제가 가능합니다.<br>
+        ※ 음란물·차별·비하·혐오·저작권 침해 게시물은 민·형사상 책임을 질 수 있습니다.
+      </div>
+
+      <!-- 액션 -->
+      <div class="form-actions">
+        <button type="submit" class="primary">등록</button>
+        <button type="button" onclick="location.href='index.html'">취소</button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <script src="./assets/js/storage.js"></script>
+  <script src="./assets/js/util.js"></script>
+  <script src="./assets/js/board_write.js"></script>
+
+</body>
+
+</html>

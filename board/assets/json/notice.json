@@ -1,0 +1,12 @@
+[
+  { "title": "시스템 점검 안내 1", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 2", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 3", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 4", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 5", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 6", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 7", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 8", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 9", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" },
+  { "title": "시스템 점검 안내 10", "content": "시스템 점검 안내 내용입니다.", "status": "ACTIVE", "board_type": "NOTICE", "category": "SYSTEM" }
+]

@@ -1,0 +1,41 @@
+delete.html<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시글 삭제</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+</head>
+
+<body>
+<div class="container">
+
+  <h1>게시글 삭제</h1>
+
+  <!-- 삭제 대상 요약 -->
+  <div class="delete-summary">
+    <p><strong>카테고리:</strong> <span id="delCategory"></span></p>
+    <p><strong>제목:</strong> <span id="delTitle"></span></p>
+    <p><strong>작성자:</strong> <span id="delWriter"></span></p>
+    <p><strong>작성일:</strong> <span id="delDate"></span></p>
+  </div>
+
+  <!-- 삭제 사유 -->
+  <div class="delete-reason">
+    <label>삭제 사유 <span style="color:red">*</span></label>
+    <textarea id="deleteReason" placeholder="삭제 사유를 입력하세요"></textarea>
+  </div>
+
+  <!-- 액션 -->
+  <div class="delete-actions">
+    <button id="btnConfirmDelete">삭제 실행</button>
+    <button onclick="history.back()">취소</button>
+  </div>
+
+</div>
+
+<script src="./assets/js/storage.js"></script>
+<script src="./assets/js/util.js"></script>
+<script src="./assets/js/delete.js"></script>
+
+</body>
+</html>
