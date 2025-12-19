@@ -13,24 +13,27 @@
 <br>
 
 ### index.html (list) ## 이미지를 누르면 해당 페이지로 이동합니다.
-<a href="https://yingbbang.github.io/bnk-board-html/board/index.html"> 
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-index.png"></a>
+<a href="https://yingbbang.github.io/bnk-board-html-gallery/board/index.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html-gallery/blob/main/board/assets/dummy/snapshot-index.png"></a>
 
 ### gallery.html (gallery) ## 이미지를 누르면 해당 페이지로 이동합니다.
 <a href="https://yingbbang.github.io/bnk-board-html-gallery/board/gallery.html"> <img src="https://github.com/yingbbang/bnk-board-html-gallery/blob/main/board/assets/dummy/snapshot-gallery.png"></a>
 
-### view.html (view)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-view.png">
+### view.html (view) ## 이미지를 누르면 해당 페이지로 이동합니다.
+<a href="https://yingbbang.github.io/bnk-board-html-gallery/board/view.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html-gallery/blob/main/board/assets/dummy/snapshot-view.png"></a>
 
 ### write.html (write) ## 이미지를 누르면 해당 페이지로 이동합니다.
-<a href="https://yingbbang.github.io/bnk-board-html/board/write.html"> 
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-write.png"></a>
+<a href="https://yingbbang.github.io/bnk-board-html-gallery/board/write.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html-gallery/blob/main/board/assets/dummy/snapshot-write.png"></a>
 
-### edit.html (edit)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-edit.png">
+### edit.html (edit) ## 이미지를 누르면 해당 페이지로 이동합니다.
+<a href="https://yingbbang.github.io/bnk-board-html-gallery/board/edit.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html-gallery/blob/main/board/assets/dummy/snapshot-edit.png"></a>
 
-### delete.html (delete)
-<img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/snapshot-delete.png">
+### delete.html (delete) ## 이미지를 누르면 해당 페이지로 이동합니다.
+<a href="https://yingbbang.github.io/bnk-board-html-gallery/board/delete.html"> 
+<img src="https://github.com/yingbbang/bnk-board-html-gallery/blob/main/board/assets/dummy/snapshot-delete.png"></a>
 
 ### ERD
 <img src="https://github.com/yingbbang/bnk-board-html/blob/main/board/assets/dummy/erd.png">
