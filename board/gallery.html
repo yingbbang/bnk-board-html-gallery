@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <title>BNK Board - Gallery</title>
   <link rel="stylesheet" href="./assets/css/common.css">
+  
   <link rel="stylesheet" href="./assets/css/gallery.css">
 </head>
+
 <body>
   <div class="container">
     <div class="board-header">
@@ -16,7 +19,9 @@
       </div>
       <div class="board-action-row">
         <h1 id="pageTitle">카드형 목록</h1>
-        <button class="primary" onclick="location.href='write.html'">글쓰기</button>
+        <button class="primary" onclick="location.href='write.html?mode=gallery'">글쓰기</button>
+
+
       </div>
     </div>
 
@@ -28,5 +33,18 @@
   <script src="./assets/js/seed.js"></script>
   <script src="./assets/js/util.js"></script>
   <script src="./assets/js/board_gallery.js"></script>
+
+  <!-- =========================
+       Footer
+       ========================= -->
+  <footer class="board-footer">
+    <a href="https://github.com/yingbbang" target="_blank" class="footer-github">
+      <img src="./assets/icons/icon-github.svg" alt="GitHub">
+      <span>© 2025 yingbbang</span>
+    </a>
+  </footer>
+
+
 </body>
+
 </html>

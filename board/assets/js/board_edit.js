@@ -1,4 +1,4 @@
-/* 게시글 수정 + 이력 (+ 첨부파일 최대 5개 제한) */
+/* 게시글 수정 + 이력 (+ 첨부파일 최대 5개 제한) + 갤러리 노출/썸네일 호환 */
 
 document.addEventListener("DOMContentLoaded", () => {
   const MAX_ATTACH = 5;
@@ -14,19 +14,37 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // --- DOM refs (name 의존 제거: id로만 접근) ---
+  // --- DOM refs (id로만 접근) ---
   const form = document.querySelector("#editForm");
+  if (!form) return;
+
   const titleEl = document.getElementById("title");
   const contentEl = document.getElementById("content");
-  const fileInput = document.getElementById("attachments");          // <input type="file" ...>
-  const existingBox = document.getElementById("existingAttachments"); // 기존첨부 렌더링 영역
+
+  const fileInput = document.getElementById("attachments");            // <input type="file" ...>
+  const existingBox = document.getElementById("existingAttachments");  // 기존첨부 렌더링 영역
+
+  // --- gallery fields (write와 동일 ID로 맞출 것) ---
+  const exposeListEl = document.getElementById("exposeList");
+  const exposeGalleryEl = document.getElementById("exposeGallery");
+  const thumbUrlEl = document.getElementById("thumbUrl");
 
   // --- 기본값 보정 ---
   board.attachments = Array.isArray(board.attachments) ? board.attachments : [];
 
+  board.expose = (board.expose && typeof board.expose === "object")
+    ? board.expose
+    : { list: true, gallery: false };
+
+  board.thumbUrl = board.thumbUrl ? String(board.thumbUrl) : "";
+
   // --- 기존 값 세팅 ---
   if (titleEl) titleEl.value = board.title || "";
   if (contentEl) contentEl.value = board.content || "";
+
+  if (exposeListEl) exposeListEl.checked = (board.expose.list ?? true);
+  if (exposeGalleryEl) exposeGalleryEl.checked = (board.expose.gallery ?? false);
+  if (thumbUrlEl) thumbUrlEl.value = board.thumbUrl || "";
 
   // =========================
   // 1) 기존 첨부 렌더링 (삭제 체크박스)
@@ -39,9 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // value에 index 박아두고, 제출 시 삭제 처리
     existingBox.innerHTML = board.attachments.map((a, idx) => {
-      const name = (a && a.name) ? a.name : String(a);
+      // write.js / edit.js 메타 키가 달라도 안전하게
+      const name = a?.file_name || a?.name || (typeof a === "string" ? a : `attachment-${idx + 1}`);
       return `
         <label class="attach-row" style="display:block; margin:6px 0;">
           <input type="checkbox" name="removeAttachment" value="${idx}">
@@ -82,30 +100,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (newCount > allowed) {
       alert(`첨부파일은 최대 ${MAX_ATTACH}개까지 가능합니다.\n현재 추가 가능: ${allowed}개`);
-      fileInput.value = ""; // 선택 초기화
+      fileInput.value = "";
     }
   }
 
-  if (fileInput) {
-    fileInput.addEventListener("change", enforceFileLimitOnSelect);
-  }
-
-  // 기존 첨부 삭제 체크가 바뀌면 "추가 가능 개수"도 바뀌니까 재검증
-  if (existingBox) {
-    existingBox.addEventListener("change", enforceFileLimitOnSelect);
-  }
+  if (fileInput) fileInput.addEventListener("change", enforceFileLimitOnSelect);
+  if (existingBox) existingBox.addEventListener("change", enforceFileLimitOnSelect);
 
   // =========================
-  // 3) 저장(submit) 시: 삭제 반영 + 신규 첨부 합산(최대 5개) + 저장
+  // 3) 저장(submit) 시: 삭제 반영 + 신규 첨부 합산(최대 5개) + gallery 필드 저장 + 이력
   // =========================
-  form.addEventListener("submit", e => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const title = titleEl ? titleEl.value.trim() : (form.title?.value || "").trim();
-    const content = contentEl ? contentEl.value : (form.content?.value || "");
+    const title = (titleEl ? titleEl.value : (form.title?.value || "")).trim();
+    const content = (contentEl ? contentEl.value : (form.content?.value || ""));
 
-    // (선택) 여기서 비밀번호 검증 로직이 있어야 "수정/삭제용"이 의미가 있음.
-    // 현재 소스엔 password 검증이 없으니, 원하면 추가해줄게.
+    // 기본 검증
+    if (!title) {
+      alert("제목을 입력하세요.");
+      titleEl?.focus();
+      return;
+    }
+    if (!content.trim()) {
+      alert("내용을 입력하세요.");
+      contentEl?.focus();
+      return;
+    }
+
+    // (선택) 비밀번호 검증이 필요하면 여기 추가:
+    // const pwEl = document.getElementById("password");
+    // if (pwEl && pwEl.value.trim() !== board.password) { alert("비밀번호가 일치하지 않습니다."); return; }
+
+    // ---- gallery 수집/검증 ----
+    const expose = {
+      list: exposeListEl?.checked ?? true,
+      gallery: exposeGalleryEl?.checked ?? false
+    };
+    const thumbUrl = (thumbUrlEl?.value || "").trim() || null;
+
+    if (!expose.list && !expose.gallery) {
+      alert("노출 위치를 최소 1개 선택하세요.");
+      return;
+    }
+
+    if (expose.gallery && !thumbUrl) {
+      alert("갤러리 노출을 체크하면 썸네일 URL이 필요합니다.");
+      thumbUrlEl?.focus();
+      return;
+    }
 
     // 1) 기존 첨부 중 삭제 체크 반영
     const removeIdx = new Set(getRemoveIndexes());
@@ -114,16 +157,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // 2) 신규 파일 메타만 저장(로컬스토리지에 File 객체 저장 불가)
     const newFiles = fileInput && fileInput.files ? Array.from(fileInput.files) : [];
     const allowed = Math.max(0, MAX_ATTACH - remained.length);
+
     if (newFiles.length > allowed) {
       alert(`첨부파일은 최대 ${MAX_ATTACH}개까지 가능합니다.\n현재 추가 가능: ${allowed}개`);
       return;
     }
 
+    const nowIso = new Date().toISOString();
     const newAttachMetas = newFiles.map(f => ({
-      name: f.name,
-      size: f.size,
-      type: f.type,
-      uploaded_at: new Date().toISOString()
+      // write.js와 동일 키로 통일
+      file_name: f.name,
+      file_size: f.size,
+      mime_type: f.type,
+      uploaded_at: nowIso
     }));
 
     const finalAttachments = remained.concat(newAttachMetas);
@@ -132,23 +178,39 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // 이력 저장(기존 구조 유지 + 첨부 변화도 같이 남김)
+    // 이력 저장(제목/본문/첨부 + 갤러리 변경도 남김)
     histories.push({
       history_id: StorageDB.nextId("SEQ_HISTORY_ID"),
       board_id: id,
-      before_content: board.content,
+
+      before_title: board.title || "",
+      after_title: title,
+
+      before_content: board.content || "",
       after_content: content,
-      before_attachments: board.attachments,     // 추가
-      after_attachments: finalAttachments,       // 추가
+
+      before_attachments: board.attachments,
+      after_attachments: finalAttachments,
+
+      before_expose: board.expose,
+      after_expose: expose,
+
+      before_thumbUrl: board.thumbUrl || null,
+      after_thumbUrl: thumbUrl,
+
       updated_by: 1,
-      updated_at: new Date().toISOString()
+      updated_at: nowIso
     });
 
     // 게시글 갱신
     board.title = title;
     board.content = content;
-    board.attachments = finalAttachments;        // 추가
-    board.updated_at = new Date().toISOString();
+    board.attachments = finalAttachments;
+
+    board.expose = expose;
+    board.thumbUrl = thumbUrl;
+
+    board.updated_at = nowIso;
     board.version = (board.version || 0) + 1;
 
     StorageDB.set("BOARD", boards);

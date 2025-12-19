@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <title>Audit Log</title>
@@ -7,48 +8,59 @@
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
 
-  <h1>감사 로그 조회</h1>
+    <h1>감사 로그 조회</h1>
 
-  <table class="board-table">
-    <thead>
-      <tr>
-        <th>시간</th>
-        <th>행위</th>
-        <th>게시글ID</th>
-        <th>행위자</th>
-        <th>IP</th>
-      </tr>
-    </thead>
-    <tbody id="auditList"></tbody>
-  </table>
+    <table class="board-table">
+      <thead>
+        <tr>
+          <th>시간</th>
+          <th>행위</th>
+          <th>게시글ID</th>
+          <th>행위자</th>
+          <th>IP</th>
+        </tr>
+      </thead>
+      <tbody id="auditList"></tbody>
+    </table>
 
-</div>
+  </div>
 
-<script src="./assets/js/storage.js"></script>
-<script>
-  const currentUser = { role: "ADMIN" }; // 임시
+  <script src="./assets/js/storage.js"></script>
+  <script>
+    const currentUser = { role: "ADMIN" }; // 임시
 
-  if (currentUser.role !== "ADMIN") {
-    alert("접근 권한이 없습니다.");
-    location.href = "index.html";
-  }
+    if (currentUser.role !== "ADMIN") {
+      alert("접근 권한이 없습니다.");
+      location.href = "index.html";
+    }
 
-  const logs = StorageDB.get("AUDIT_LOG") || [];
-  const tbody = document.getElementById("auditList");
+    const logs = StorageDB.get("AUDIT_LOG") || [];
+    const tbody = document.getElementById("auditList");
 
-  logs.forEach(log => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
+    logs.forEach(log => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
       <td>${log.created_at}</td>
       <td>${log.action}</td>
       <td>${log.board_id}</td>
       <td>${log.actor}</td>
       <td>${log.ip}</td>
     `;
-    tbody.appendChild(tr);
-  });
-</script>
+      tbody.appendChild(tr);
+    });
+  </script>
+  <!-- =========================
+       Footer
+       ========================= -->
+  <footer class="board-footer">
+    <a href="https://github.com/yingbbang" target="_blank" class="footer-github">
+      <img src="./assets/icons/icon-github.svg" alt="GitHub">
+      <span>© 2025 yingbbang</span>
+    </a>
+  </footer>
+
 </body>
+
 </html>

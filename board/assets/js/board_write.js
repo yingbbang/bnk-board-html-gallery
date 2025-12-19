@@ -1,10 +1,22 @@
-/* 게시글 등록 */
+/* 게시글 등록 (list + gallery 호환) */
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("writeForm");
   if (!form) return;
 
-  form.addEventListener("submit", e => {
+  const $ = (id) => document.getElementById(id);
+
+  // 1) mode 처리: gallery에서 넘어오면 기본값 세팅 + 저장 후 돌아갈 페이지 결정
+  const qsMode = (window.Util?.qs?.("mode") || "").toLowerCase();
+  const mode = qsMode || ($("mode")?.value || "list"); // list | gallery
+  if ($("mode")) $("mode").value = mode;
+
+  // gallery 진입이면 기본 체크(원하면 list는 유지)
+  if (mode === "gallery") {
+    if ($("exposeGallery")) $("exposeGallery").checked = true;
+  }
+
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     /* =========================
@@ -18,48 +30,61 @@ document.addEventListener("DOMContentLoaded", () => {
     const content  = form.content.value.trim();
     const writer   = form.writer.value.trim() || "익명";
     const password = form.password.value.trim();
-    const files    = form.attachments?.files || [];
+
+    // 파일 입력들(현재는 메타만 저장)
+    const attachFiles = form.attachments?.files || [];
+    const thumbFile   = $("thumbFile")?.files?.[0] || null;       // 아직 저장 미지원
+    const viewImages  = $("viewImages")?.files || [];             // 아직 저장 미지원
 
     /* =========================
-     * 2. 유효성 검사
+     * 2. 갤러리 관련 값 수집
      * ========================= */
-    if (!category) {
-      alert("카테고리를 선택하세요.");
+    const expose = {
+      list: $("exposeList")?.checked ?? true,
+      gallery: $("exposeGallery")?.checked ?? false
+    };
+
+    const thumbUrl = ($("thumbUrl")?.value || "").trim() || null;
+
+    /* =========================
+     * 3. 유효성 검사
+     * ========================= */
+    if (!category) return alert("카테고리를 선택하세요.");
+    if (!title)    return alert("제목을 입력하세요.");
+    if (!content)  return alert("내용을 입력하세요.");
+    if (!password) return alert("비밀번호를 입력하세요.");
+
+    // 노출 위치는 최소 1개
+    if (!expose.list && !expose.gallery) {
+      alert("노출 위치를 최소 1개 선택하세요.");
       return;
     }
 
-    if (!title) {
-      alert("제목을 입력하세요.");
+    // 갤러리 노출이면 썸네일 URL 필수(파일 업로드는 아직 미지원)
+    if (expose.gallery && !thumbUrl) {
+      alert("갤러리 노출을 체크하면 썸네일 URL이 필요합니다.");
+      $("thumbUrl")?.focus();
       return;
     }
 
-    if (!content) {
-      alert("내용을 입력하세요.");
-      return;
-    }
-
-    if (!password) {
-      alert("비밀번호를 입력하세요.");
-      return;
-    }
-
-    if (files.length > 5) {
-      alert("첨부파일은 최대 5개까지 등록할 수 있습니다.");
+    // 첨부 합산 5개 제한 (thumbFile/viewImages도 포함해서 카운트만)
+    const totalFileCount = attachFiles.length + (thumbFile ? 1 : 0) + viewImages.length;
+    if (totalFileCount > 5) {
+      alert("첨부파일은 (썸네일/본문이미지/일반첨부) 합산 최대 5개까지 등록할 수 있습니다.");
       return;
     }
 
     /* =========================
-     * 3. 첨부파일 메타데이터 처리
-     * (실파일 저장 ❌, 메타만)
+     * 4. 첨부파일 메타데이터 처리 (실파일 저장 ❌)
      * ========================= */
-    const attachments = Array.from(files).map(file => ({
+    const attachments = Array.from(attachFiles).map((file) => ({
       file_name: file.name,
       file_size: file.size,
       mime_type: file.type
     }));
 
     /* =========================
-     * 4. 게시글 저장
+     * 5. 게시글 저장
      * ========================= */
     const now = new Date().toISOString();
     const id  = StorageDB.nextId("SEQ_BOARD_ID");
@@ -70,16 +95,18 @@ document.addEventListener("DOMContentLoaded", () => {
       title,
       content,
       writer,
-      password,              // ★ 수정/삭제 검증용
-      attachments,           // ★ 첨부파일 메타
+      password,      // 수정/삭제 검증용
+      attachments,   // 일반 첨부 메타
+      expose,        // ★ 추가: list/gallery 노출 제어
+      thumbUrl,      // ★ 추가: 갤러리 카드 썸네일
       status: "ACTIVE",
-      is_notice: false,      // 확장 포인트
-      is_pinned: false,      // 확장 포인트
+      is_notice: false,
+      is_pinned: false,
       created_at: now
     });
 
     /* =========================
-     * 5. 통계 초기화
+     * 6. 통계 초기화
      * ========================= */
     stats.push({
       board_id: id,
@@ -92,8 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
     StorageDB.set("BOARD_STAT", stats);
 
     /* =========================
-     * 6. 이동
+     * 7. 이동
      * ========================= */
-    location.href = "index.html";
+    location.href = (mode === "gallery") ? "gallery.html" : "index.html";
   });
 });
